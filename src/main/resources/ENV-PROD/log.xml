@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN"
+	packages="org.apache.logging.log4j.core,net.kencochrane.raven.log4j2">
+	<Properties>
+		<Property name="log-path">platform-logs</Property>
+	</Properties>
+	<Appenders>
+		<Raven name="Sentry">
+			<dsn>
+				http://02dc672d5e2f47b38a54dbbe13abc97d:858439161e1346fe8f7af410fba4ec6f@app.getsentry.com/68882
+			</dsn>
+			<tags>
+				tag1:value1,tag2:value2
+			</tags>
+			<!-- Optional, allows to select the ravenFactory -->
+			<!-- <ravenFactory> net.kencochrane.raven.DefaultRavenFactory </ravenFactory> -->
+		</Raven>
+		<Console name="console-log" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} %M - %msg%n" />
+		</Console>
+		<RollingFile name="info-log" fileName="${log-path}/prod-platform-info.log"
+			filePattern="${log-path}/prod-platform-info-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} %M - %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="error-log" fileName="${log-path}/prod-platform-error.log"
+			filePattern="${log-path}/prod-platform-error-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} %M - %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="all" additivity="false">
+			<AppenderRef ref="Sentry" level="error" /> 
+			<appender-ref ref="info-log" level="info" />
+		</Root>
+	</Loggers>
+</Configuration>

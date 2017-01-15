@@ -1,0 +1,5 @@
+target/
+/bin/
+./DS_Store
+src/main/java/com/vedantu/platform/engagement/rules/
+src/main/java/com/vedantu/platform/engagement/testanalyze/
