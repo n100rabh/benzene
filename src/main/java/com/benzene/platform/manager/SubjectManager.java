@@ -31,8 +31,7 @@ public class SubjectManager {
 		if (id == null) {
 			commonDAO.saveEntity(subject);
 		} else {
-			Subject subject1 = (Subject) commonDAO.getEntity(id, null,
-					Subject.class);
+			Subject subject1 = (Subject) commonDAO.getEntity(id, null, Subject.class);
 			subject = addUpdates(subject1, subject);
 			commonDAO.updateEntity(subject);
 		}

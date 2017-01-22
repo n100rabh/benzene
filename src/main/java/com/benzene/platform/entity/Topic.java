@@ -23,17 +23,50 @@ import com.benzene.util.entity.AbstractEntity;
 public class Topic extends AbstractEntity {
 
 	@ManyToOne
-	@NotFound(action = NotFoundAction.IGNORE) 
+	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "subjectId")
 	private Subject subject;
-	
-	@OneToMany(mappedBy="topic", cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
 	private Set<Concept> concepts;
-	
-	@OneToMany(mappedBy="topic", cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
 	private Set<TopicProblemMapping> topicProblemMappings;
-	
+
 	public Topic() {
 		super();
+	}
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+
+	public Set<Concept> getConcepts() {
+		return concepts;
+	}
+
+	public void setConcepts(Set<Concept> concepts) {
+		this.concepts = concepts;
+	}
+
+	public Set<TopicProblemMapping> getTopicProblemMappings() {
+		return topicProblemMappings;
+	}
+
+	public void setTopicProblemMappings(Set<TopicProblemMapping> topicProblemMappings) {
+		this.topicProblemMappings = topicProblemMappings;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Topic [subject=").append(subject).append(", concepts=").append(concepts)
+				.append(", topicProblemMappings=").append(topicProblemMappings).append(", toString()=")
+				.append(super.toString()).append("]");
+		return builder.toString();
 	}
 }

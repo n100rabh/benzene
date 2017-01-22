@@ -27,5 +27,11 @@ public class Text extends AbstractEntity {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Text [text=").append(text).append(", toString()=").append(super.toString()).append("]");
+		return builder.toString();
+	}
 }

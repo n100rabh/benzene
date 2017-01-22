@@ -70,7 +70,7 @@ public class SubjectController {
 	}
 
 	@ApiOperation(value = "Update Subject", notes = "Returns created subject")
-	@RequestMapping(value = "{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Subject updateSubject(@PathVariable("id") Long id, @RequestBody Subject subject) throws Throwable {
 		subject.setId(id);

@@ -21,4 +21,19 @@ public class Equation extends AbstractEntity {
 	public Equation() {
 		super();
 	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Equation [text=").append(text).append(", toString()=").append(super.toString()).append("]");
+		return builder.toString();
+	}
 }

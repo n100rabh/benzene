@@ -29,4 +29,12 @@ public class TopicProblemMapping extends AbstractEntity {
 	public TopicProblemMapping() {
 		super();
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TopicProblemMapping [problemSequenceNo=").append(problemSequenceNo).append(", toString()=")
+				.append(super.toString()).append("]");
+		return builder.toString();
+	}
 }
