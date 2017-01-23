@@ -73,6 +73,7 @@ public class SubjectManager {
 			Subject subject = (Subject) commonDAO.getEntity(id, null, Subject.class, session);
 			subject.addTopic(topic);
 			topic.setSubject(subject);
+			commonDAO.setEntityDefaultProperties(topic);
 			transaction.commit();
 		} finally {
 			session.close();

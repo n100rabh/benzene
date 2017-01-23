@@ -221,7 +221,7 @@ public class CommonDAO {
 		return count;
 	}
 
-	public static <E extends AbstractEntity> void setEntityDefaultProperties(Collection<E> entities) {
+	public <E extends AbstractEntity> void setEntityDefaultProperties(Collection<E> entities) {
 		if (entities != null && !entities.isEmpty()) {
 			for (E entity : entities) {
 				setEntityDefaultProperties(entity);
@@ -229,7 +229,7 @@ public class CommonDAO {
 		}
 	}
 
-	public static <E extends AbstractEntity> void setEntityDefaultProperties(E entity) {
+	public <E extends AbstractEntity> void setEntityDefaultProperties(E entity) {
 		if (entity.getId() == null) {
 			entity.setState(State.ACTIVE);
 			entity.setCreationDate(new Date());
