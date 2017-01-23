@@ -39,11 +39,11 @@ public class SubjectManager {
 		try {
 			transaction.begin();
 			if (id == null) {
-				commonDAO.saveEntity(subject);
+				commonDAO.saveEntity(subject, session);
 			} else {
-				Subject subject1 = (Subject) commonDAO.getEntity(id, null, Subject.class);
+				Subject subject1 = (Subject) commonDAO.getEntity(id, null, Subject.class, session);
 				subject = addUpdates(subject1, subject);
-				commonDAO.updateEntity(subject);
+				commonDAO.updateEntity(subject, session);
 			}
 			transaction.commit();
 		} finally {
@@ -70,7 +70,7 @@ public class SubjectManager {
 		Transaction transaction = session.getTransaction();
 		try {
 			transaction.begin();
-			Subject subject = (Subject) commonDAO.getEntity(id, null, Subject.class);
+			Subject subject = (Subject) commonDAO.getEntity(id, null, Subject.class, session);
 			subject.addTopic(topic);
 			topic.setSubject(subject);
 			transaction.commit();
