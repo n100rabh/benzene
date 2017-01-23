@@ -44,15 +44,11 @@ public class TopicController {
 	@ApiOperation(value = "Create Topic", notes = "Returns created topic")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Subject createTopic(@PathVariable("id") Long id, @RequestBody Topic topic) throws Throwable {
+	public Topic createTopic(@PathVariable("id") Long id, @RequestBody Topic topic) throws Throwable {
 		logger.info("createTopic Request:" + topic.toString());
-		Subject subject = subjectManager.getSubject(id, null);
-		subject.addTopic(topic);
-		topic.setSubject(subject);
-		subject = subjectManager.addOrUpdateSubject(subject);
-//		Topic response = topicManager.addOrUpdateTopic(topic);
-		logger.info("createTopic Response:" + subject.toString());
-		return subject;
+		Topic response = subjectManager.addTopic(id, topic);
+		logger.info("createTopic Response:" + response.toString());
+		return response;
 	}
 
 	@ApiOperation(value = "Get a Topic", notes = "Returns topic")
