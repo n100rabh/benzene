@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.benzene.platform.entity.Problem;
-import com.benzene.platform.request.GetAbstractReq;
 import com.benzene.util.LogFactory;
 import com.benzene.util.dao.CommonDAO;
 import com.benzene.util.enums.State;
+import com.benzene.util.request.GetAbstractReq;
 
 @Service
 public class ProblemManager {
@@ -57,9 +57,6 @@ public class ProblemManager {
 		}
 		if (newObj.getName() != null) {
 			oldObj.setName(newObj.getName());
-		}
-		if (newObj.getText() != null) {
-			oldObj.setText(newObj.getText());
 		}
 		if (newObj.getLevel() != null) {
 			oldObj.setLevel(newObj.getLevel());

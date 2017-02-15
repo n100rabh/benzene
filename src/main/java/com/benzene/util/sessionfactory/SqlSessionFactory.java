@@ -8,8 +8,9 @@ import org.hibernate.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.benzene.platform.entity.Branch;
+import com.benzene.platform.entity.Chapter;
 import com.benzene.platform.entity.Concept;
-import com.benzene.platform.entity.Equation;
 import com.benzene.platform.entity.Problem;
 import com.benzene.platform.entity.Subject;
 import com.benzene.platform.entity.Topic;
@@ -22,24 +23,26 @@ public class SqlSessionFactory {
 
 	@Autowired
 	private ConfigUtils configUtils;
-	
+
 	private Logger logger = LogFactory.getLogger(SqlSessionFactory.class);
-	
+
 	private SessionFactory sessionFactory = null;
 
 	public SqlSessionFactory() {
 		logger.info("initializing Sql Session Factory");
 		configUtils = new ConfigUtils();
-		
+
 		try {
 			Configuration configuration = new Configuration();
-			String path = "ENV-"+configUtils.properties.getProperty("environment")+java.io.File.separator+"hibernate.cfg.xml";
+			String path = "ENV-" + configUtils.properties.getProperty("environment") + java.io.File.separator
+					+ "hibernate.cfg.xml";
 			configuration.configure(path);
 			configuration.addAnnotatedClass(Subject.class);
+			configuration.addAnnotatedClass(Branch.class);
+			configuration.addAnnotatedClass(Chapter.class);
+			configuration.addAnnotatedClass(Topic.class);
 			configuration.addAnnotatedClass(Concept.class);
 			configuration.addAnnotatedClass(Problem.class);
-			configuration.addAnnotatedClass(Equation.class);
-			configuration.addAnnotatedClass(Topic.class);
 			configuration.addAnnotatedClass(TopicProblemMapping.class);
 			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 					.applySettings(configuration.getProperties()).build();

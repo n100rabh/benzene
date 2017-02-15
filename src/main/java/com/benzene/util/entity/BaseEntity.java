@@ -7,33 +7,43 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.benzene.util.enums.State;
+import com.benzene.util.request.BaseRequest;
 
 @MappedSuperclass
-public abstract class AbstractEntity {
+public abstract class BaseEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String name;
 	@Enumerated(EnumType.STRING)
 	private State state;
-	@DateTimeFormat(style="F")
+	@Lob
+	private String description;
+	@DateTimeFormat(style = "F")
 	private Date creationDate;
 	private Long createdBy;
-	@DateTimeFormat(style="F")
+	@DateTimeFormat(style = "F")
 	private Date lastUpdatedDate;
 	private Long lastUpdatedBy;
 
-	public AbstractEntity() {
-		super();
+	public BaseEntity() {
 	}
 
-	public AbstractEntity(Long id, String name, State state, Date creationDate, Long createdBy, Date lastUpdatedDate,
+	public BaseEntity(BaseRequest request) {
+		this.id = request.getId();
+		this.name = request.getName();
+		this.state = request.getState();
+		this.description = request.getDescription();
+	}
+
+	public BaseEntity(Long id, String name, State state, Date creationDate, Long createdBy, Date lastUpdatedDate,
 			Long lastUpdatedBy) {
 		super();
 		this.id = id;
@@ -101,10 +111,34 @@ public abstract class AbstractEntity {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public void addUpdates(BaseEntity entity) {
+		if (entity.getName() != null) {
+			this.setName(entity.getName());
+		}
+		if (entity.getState() != null) {
+			this.setState(entity.getState());
+		}
+		if(entity.getDescription() != null) {
+			this.setDescription(entity.getDescription());
+		}
+		this.setLastUpdatedBy(entity.getLastUpdatedBy());
+	}
+
 	@Override
 	public String toString() {
-		return "AbstractEntity [id=" + id + ", name=" + name + ", state=" + state + ", creationDate=" + creationDate
-				+ ", createdBy=" + createdBy + ", lastUpdatedDate=" + lastUpdatedDate + ", lastUpdatedBy="
-				+ lastUpdatedBy + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("id=").append(id).append(", name=").append(name).append(", state=").append(state)
+				.append(", description=").append(description).append(", creationDate=").append(creationDate)
+				.append(", createdBy=").append(createdBy).append(", lastUpdatedDate=").append(lastUpdatedDate)
+				.append(", lastUpdatedBy=").append(lastUpdatedBy);
+		return builder.toString();
 	}
 }

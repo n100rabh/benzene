@@ -8,8 +8,8 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.benzene.platform.entity.Concept;
 import com.benzene.platform.entity.Topic;
+import com.benzene.platform.entity.Chapter;
 import com.benzene.util.LogFactory;
 import com.benzene.util.dao.CommonDAO;
 import com.benzene.util.enums.State;
@@ -17,7 +17,7 @@ import com.benzene.util.request.GetAbstractReq;
 import com.benzene.util.sessionfactory.SqlSessionFactory;
 
 @Service
-public class TopicManager {
+public class ChapterManager {
 
 	@Autowired
 	private CommonDAO commonDAO;
@@ -29,60 +29,60 @@ public class TopicManager {
 	private SqlSessionFactory sqlSessionfactory;
 
 	@SuppressWarnings("static-access")
-	private Logger logger = logfactory.getLogger(TopicManager.class);
+	private Logger logger = logfactory.getLogger(ChapterManager.class);
 
-	public Topic addOrUpdateTopic(Topic topic) {
+	public Chapter addOrUpdateChapter(Chapter chapter) {
 		Session session = sqlSessionfactory.getSessionFactory().openSession();
 		Transaction transaction = session.getTransaction();
 
-		Long id = topic.getId();
+		Long id = chapter.getId();
 		try {
 			transaction.begin();
 			if (id == null) {
-				commonDAO.saveEntity(topic, session);
+				commonDAO.saveEntity(chapter, session);
 			} else {
-				Topic topic1 = (Topic) commonDAO.getEntity(id, null, Topic.class, session);
-				topic = addUpdates(topic1, topic);
-				commonDAO.updateEntity(topic, session);
+				Chapter chapter1 = (Chapter) commonDAO.getEntity(id, null, Chapter.class, session);
+				chapter = addUpdates(chapter1, chapter);
+				commonDAO.updateEntity(chapter, session);
 			}
 			transaction.commit();
 		} finally {
 			session.close();
 		}
 
-		return topic;
+		return chapter;
 	}
 
-	public Topic getTopic(Long id, State state) {
-		return commonDAO.getEntity(id, state, Topic.class);
+	public Chapter getChapter(Long id, State state) {
+		return commonDAO.getEntity(id, state, Chapter.class);
 	}
 
-	public List<Topic> getTopics(GetAbstractReq req) {
-		return commonDAO.getEntities(Topic.class, req, null);
+	public List<Chapter> getChapters(GetAbstractReq req) {
+		return commonDAO.getEntities(Chapter.class, req, null);
 	}
 
-	public void updateTopics(List<Topic> slist) {
-		commonDAO.updateEntities(slist, Topic.class.getSimpleName());
+	public void updateChapters(List<Chapter> slist) {
+		commonDAO.updateEntities(slist, Chapter.class.getSimpleName());
 	}
 
-	public Concept addConcept(Long id, Concept concept) {
+	public Topic addTopic(Long id, Topic topic) {
 		Session session = sqlSessionfactory.getSessionFactory().openSession();
 		Transaction transaction = session.getTransaction();
 		try {
 			transaction.begin();
-			Topic topic = (Topic) commonDAO.getEntity(id, null, Topic.class, session);
-			topic.addConcept(concept);
-			concept.setTopic(topic);
-			commonDAO.setEntityDefaultProperties(concept);
+			Chapter chapter = (Chapter) commonDAO.getEntity(id, null, Chapter.class, session);
+			chapter.addTopic(topic);
+			topic.setChapter(chapter);
+			commonDAO.setEntityDefaultProperties(topic);
 			transaction.commit();
 		} finally {
 			session.close();
 		}
-		concept.setTopic(null);
-		return concept;
+		topic.setChapter(null);
+		return topic;
 	}
 
-	Topic addUpdates(Topic oldObj, Topic newObj) {
+	Chapter addUpdates(Chapter oldObj, Chapter newObj) {
 		if (newObj.getState() != null) {
 			oldObj.setState(newObj.getState());
 		}

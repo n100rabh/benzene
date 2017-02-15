@@ -14,10 +14,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.benzene.platform.request.GetAbstractReq;
 import com.benzene.util.LogFactory;
-import com.benzene.util.entity.AbstractEntity;
+import com.benzene.util.entity.BaseEntity;
 import com.benzene.util.enums.State;
+import com.benzene.util.request.GetAbstractReq;
 import com.benzene.util.sessionfactory.SqlSessionFactory;
 
 @Repository
@@ -36,7 +36,7 @@ public class CommonDAO {
 		super();
 	}
 
-	public <E extends AbstractEntity> void saveEntity(E entity) {
+	public <E extends BaseEntity> void saveEntity(E entity) {
 		SessionFactory sessionFactory = sqlSessionfactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.getTransaction();
@@ -51,12 +51,12 @@ public class CommonDAO {
 		}
 	}
 
-	public <E extends AbstractEntity> void saveEntity(E entity, Session session) {
+	public <E extends BaseEntity> void saveEntity(E entity, Session session) {
 		setEntityDefaultProperties(entity);
 		session.save(entity);
 	}
 
-	public <E extends AbstractEntity> void saveEntities(Collection<E> entities, String collectionName) {
+	public <E extends BaseEntity> void saveEntities(Collection<E> entities, String collectionName) {
 		SessionFactory sessionFactory = sqlSessionfactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.getTransaction();
@@ -72,7 +72,7 @@ public class CommonDAO {
 		}
 	}
 
-	public <E extends AbstractEntity> void saveEntities(Collection<E> entities, String collectionName,
+	public <E extends BaseEntity> void saveEntities(Collection<E> entities, String collectionName,
 			Session session) {
 		setEntityDefaultProperties(entities);
 		if (entities != null && !entities.isEmpty()) {
@@ -82,7 +82,7 @@ public class CommonDAO {
 		}
 	}
 
-	public <T extends AbstractEntity> T getEntity(Long id, State state, Class<T> calzz) {
+	public <T extends BaseEntity> T getEntity(Long id, State state, Class<T> calzz) {
 		SessionFactory sessionFactory = sqlSessionfactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		T result = null;
@@ -98,7 +98,7 @@ public class CommonDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractEntity> T getEntity(Long id, State state, Class<T> calzz, Session session) {
+	public <T extends BaseEntity> T getEntity(Long id, State state, Class<T> calzz, Session session) {
 		List<T> results = null;
 		Criteria cr = session.createCriteria(calzz);
 		cr.add(Restrictions.eq("id", id));
@@ -112,7 +112,7 @@ public class CommonDAO {
 		return null;
 	}
 
-	public <T extends AbstractEntity> List<T> getEntities(Class<T> calzz, GetAbstractReq req, State state) {
+	public <T extends BaseEntity> List<T> getEntities(Class<T> calzz, GetAbstractReq req, State state) {
 		SessionFactory sessionFactory = sqlSessionfactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		List<T> results = null;
@@ -127,7 +127,7 @@ public class CommonDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractEntity> List<T> getEntities(Class<T> calzz, GetAbstractReq req, State state,
+	public <T extends BaseEntity> List<T> getEntities(Class<T> calzz, GetAbstractReq req, State state,
 			Session session) {
 		List<T> results = null;
 		Criteria cr = session.createCriteria(calzz);
@@ -148,7 +148,7 @@ public class CommonDAO {
 		return results;
 	}
 
-	public <E extends AbstractEntity> void updateEntity(E entity) {
+	public <E extends BaseEntity> void updateEntity(E entity) {
 		SessionFactory sessionFactory = sqlSessionfactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.getTransaction();
@@ -163,12 +163,12 @@ public class CommonDAO {
 		}
 	}
 
-	public <E extends AbstractEntity> void updateEntity(E entity, Session session) {
+	public <E extends BaseEntity> void updateEntity(E entity, Session session) {
 		setEntityDefaultProperties(entity);
 		session.update(entity);
 	}
 
-	public <E extends AbstractEntity> void updateEntities(Collection<E> entities, String collectionName) {
+	public <E extends BaseEntity> void updateEntities(Collection<E> entities, String collectionName) {
 		SessionFactory sessionFactory = sqlSessionfactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.getTransaction();
@@ -183,7 +183,7 @@ public class CommonDAO {
 		}
 	}
 
-	public <E extends AbstractEntity> void updateEntities(Collection<E> entities, String collectionName,
+	public <E extends BaseEntity> void updateEntities(Collection<E> entities, String collectionName,
 			Session session) {
 		setEntityDefaultProperties(entities);
 		if (entities != null && !entities.isEmpty()) {
@@ -194,13 +194,13 @@ public class CommonDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractEntity> List<T> runQuery(Session session, Criteria cr, Class<T> calzz) {
+	public <T extends BaseEntity> List<T> runQuery(Session session, Criteria cr, Class<T> calzz) {
 		List<T> results = null;
 		results = cr.list();
 		return results;
 	}
 
-	public <T extends AbstractEntity> Long queryCount(Class<T> calzz) {
+	public <T extends BaseEntity> Long queryCount(Class<T> calzz) {
 		SessionFactory sessionFactory = sqlSessionfactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Long count;
@@ -214,14 +214,14 @@ public class CommonDAO {
 		return count;
 	}
 
-	public <T extends AbstractEntity> Long queryCount(Class<T> calzz, Session session) {
+	public <T extends BaseEntity> Long queryCount(Class<T> calzz, Session session) {
 		Long count;
 		Criteria cr = session.createCriteria(calzz);
 		count = (Long) cr.setProjection(Projections.rowCount()).uniqueResult();
 		return count;
 	}
 
-	public <E extends AbstractEntity> void setEntityDefaultProperties(Collection<E> entities) {
+	public <E extends BaseEntity> void setEntityDefaultProperties(Collection<E> entities) {
 		if (entities != null && !entities.isEmpty()) {
 			for (E entity : entities) {
 				setEntityDefaultProperties(entity);
@@ -229,7 +229,7 @@ public class CommonDAO {
 		}
 	}
 
-	public <E extends AbstractEntity> void setEntityDefaultProperties(E entity) {
+	public <E extends BaseEntity> void setEntityDefaultProperties(E entity) {
 		if (entity.getId() == null) {
 			entity.setState(State.ACTIVE);
 			entity.setCreationDate(new Date());

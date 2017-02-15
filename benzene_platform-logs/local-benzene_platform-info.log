@@ -1,0 +1,57 @@
+[INFO] [2017-02-15 01:23:48.003] ConfigUtils <init> - /ENV-LOCAL/log.xml
+[INFO] [2017-02-15 01:23:48.005] ConfigUtils <init> - Logging Enabled
+[INFO] [2017-02-15 01:23:48.018] SqlSessionFactory <init> - initializing Sql Session Factory
+[INFO] [2017-02-15 01:23:48.019] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-15 01:23:48.286] Version logVersion - HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] [2017-02-15 01:23:48.289] Environment <clinit> - HHH000206: hibernate.properties not found
+[INFO] [2017-02-15 01:23:48.290] Environment buildBytecodeProvider - HHH000021: Bytecode provider name : javassist
+[INFO] [2017-02-15 01:23:49.193] Version <clinit> - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[INFO] [2017-02-15 01:23:49.448] C3P0ConnectionProvider configure - HHH010002: C3P0 using driver: com.mysql.jdbc.Driver at URL: jdbc:mysql://localhost:3306/vedtest?autoReconnect=true
+[INFO] [2017-02-15 01:23:49.450] C3P0ConnectionProvider configure - HHH10001001: Connection properties: {user=root, password=****}
+[INFO] [2017-02-15 01:23:49.453] C3P0ConnectionProvider configure - HHH10001003: Autocommit mode: false
+[INFO] [2017-02-15 01:23:54.815] C3P0ConnectionProvider configure - HHH10001007: JDBC isolation level: <unknown>
+[INFO] [2017-02-15 01:23:55.640] Dialect <init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+[INFO] [2017-02-15 01:23:55.748] LobCreatorBuilderImpl useContextualLobCreation - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO] [2017-02-15 01:24:07.270] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-15 01:24:41.891] SubjectController getSubjects - Request received for Subjects by TeacherId and StudentId
+[INFO] [2017-02-15 01:24:42.083] SubjectController getSubjects - Response:[SubjectResponse [id=483, name=Chemistry, state=VERIFIED, description=null]]
+[INFO] [2017-02-15 01:28:11.624] ConfigUtils <init> - /ENV-LOCAL/log.xml
+[INFO] [2017-02-15 01:28:11.625] ConfigUtils <init> - Logging Enabled
+[INFO] [2017-02-15 01:28:11.632] SqlSessionFactory <init> - initializing Sql Session Factory
+[INFO] [2017-02-15 01:28:11.633] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-15 01:28:12.000] Version logVersion - HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] [2017-02-15 01:28:12.004] Environment <clinit> - HHH000206: hibernate.properties not found
+[INFO] [2017-02-15 01:28:12.006] Environment buildBytecodeProvider - HHH000021: Bytecode provider name : javassist
+[INFO] [2017-02-15 01:28:12.516] Version <clinit> - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[INFO] [2017-02-15 01:28:12.735] C3P0ConnectionProvider configure - HHH010002: C3P0 using driver: com.mysql.jdbc.Driver at URL: jdbc:mysql://localhost:3306/vedtest?autoReconnect=true
+[INFO] [2017-02-15 01:28:12.736] C3P0ConnectionProvider configure - HHH10001001: Connection properties: {user=root, password=****}
+[INFO] [2017-02-15 01:28:12.737] C3P0ConnectionProvider configure - HHH10001003: Autocommit mode: false
+[INFO] [2017-02-15 01:28:17.913] C3P0ConnectionProvider configure - HHH10001007: JDBC isolation level: <unknown>
+[INFO] [2017-02-15 01:28:18.285] Dialect <init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+[INFO] [2017-02-15 01:28:18.335] LobCreatorBuilderImpl useContextualLobCreation - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO] [2017-02-15 01:28:22.957] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-15 01:28:43.852] SubjectController getSubjects - Request received for Subjects by TeacherId and StudentId
+[INFO] [2017-02-15 01:28:44.055] SubjectController getSubjects - Response:[SubjectResponse [id=483, name=Chemistry, state=VERIFIED, description=null]]
+[INFO] [2017-02-15 01:37:24.631] ConfigUtils <init> - /ENV-LOCAL/log.xml
+[INFO] [2017-02-15 01:37:24.632] ConfigUtils <init> - Logging Enabled
+[INFO] [2017-02-15 01:37:24.638] SqlSessionFactory <init> - initializing Sql Session Factory
+[INFO] [2017-02-15 01:37:24.639] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-15 01:37:24.820] Version logVersion - HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] [2017-02-15 01:37:24.823] Environment <clinit> - HHH000206: hibernate.properties not found
+[INFO] [2017-02-15 01:37:24.825] Environment buildBytecodeProvider - HHH000021: Bytecode provider name : javassist
+[INFO] [2017-02-15 01:37:25.519] Version <clinit> - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[INFO] [2017-02-15 01:37:25.739] C3P0ConnectionProvider configure - HHH010002: C3P0 using driver: com.mysql.jdbc.Driver at URL: jdbc:mysql://localhost:3306/vedtest?autoReconnect=true
+[INFO] [2017-02-15 01:37:25.740] C3P0ConnectionProvider configure - HHH10001001: Connection properties: {user=root, password=****}
+[INFO] [2017-02-15 01:37:25.741] C3P0ConnectionProvider configure - HHH10001003: Autocommit mode: false
+[INFO] [2017-02-15 01:37:30.984] C3P0ConnectionProvider configure - HHH10001007: JDBC isolation level: <unknown>
+[INFO] [2017-02-15 01:37:31.358] Dialect <init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+[INFO] [2017-02-15 01:37:31.406] LobCreatorBuilderImpl useContextualLobCreation - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO] [2017-02-15 01:37:36.939] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-15 01:38:40.224] SubjectController getSubjects - Request received for Subjects by TeacherId and StudentId
+[INFO] [2017-02-15 01:38:40.407] SubjectController getSubjects - Response:[SubjectResponse [id=483, name=Chemistry, state=VERIFIED, description=null]]
+[INFO] [2017-02-15 01:39:45.152] SubjectController updateSubject - updateSubject Request:SubjectRequest [id=483, name=null, state=null, description=Chemists log k kaam ka subject]
+[INFO] [2017-02-15 01:39:45.253] SubjectController updateSubject - updateSubject Response:SubjectResponse [id=483, name=Chemistry, state=VERIFIED, description=null]
+[INFO] [2017-02-15 01:42:20.708] SubjectController getSubject - Request received for getting Subject for db_id: 483
+[INFO] [2017-02-15 01:42:20.733] SubjectController getSubject - getSubject Response:SubjectResponse [id=483, name=Chemistry, state=VERIFIED, description=null]
+[INFO] [2017-02-15 01:42:40.589] SubjectController getBranches - Request received for Branches
+[INFO] [2017-02-15 01:42:40.612] SubjectController getBranches - Response:[BranchResponse [id=486, name=XI, state=ACTIVE, description=null, viewType=BOARDS]]

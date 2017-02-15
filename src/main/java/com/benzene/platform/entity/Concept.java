@@ -1,7 +1,5 @@
 package com.benzene.platform.entity;
 
-import java.util.Comparator;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -13,18 +11,18 @@ import org.hibernate.annotations.NotFoundAction;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.benzene.util.entity.AbstractEntity;
+import com.benzene.util.entity.SequencedEntity;
 
 @Entity
 @Table(name = "Concept")
 @Component
 @Scope("prototype")
-public class Concept extends AbstractEntity implements Comparable<Concept>, Comparator<Concept> {
+public class Concept extends SequencedEntity {
 
 	private String heading; // heading ques
 	@Lob
 	private String text;
-	private Integer sequenceNo; // Ordering in a Topic
+	private String baseImageUrl;
 	@ManyToOne
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "topicId")
@@ -50,14 +48,6 @@ public class Concept extends AbstractEntity implements Comparable<Concept>, Comp
 		this.text = text;
 	}
 
-	public Integer getSequenceNo() {
-		return sequenceNo;
-	}
-
-	public void setSequenceNo(Integer sequenceNo) {
-		this.sequenceNo = sequenceNo;
-	}
-
 	public Topic getTopic() {
 		return topic;
 	}
@@ -66,21 +56,20 @@ public class Concept extends AbstractEntity implements Comparable<Concept>, Comp
 		this.topic = topic;
 	}
 
-	@Override
-	public int compareTo(Concept o) {
-		return (int) (this.sequenceNo.compareTo(o.getSequenceNo()));
+	public String getBaseImageUrl() {
+		return baseImageUrl;
 	}
 
-	@Override
-	public int compare(Concept o1, Concept o2) {
-		return (int) (o1.compareTo(o2));
+	public void setBaseImageUrl(String baseImageUrl) {
+		this.baseImageUrl = baseImageUrl;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Concept [heading=").append(heading).append(", text=").append(text).append(", sequenceNo=")
-				.append(sequenceNo).append(", toString()=").append(super.toString()).append("]");
+		builder.append("Concept [").append(super.toString()).append(", heading=").append(heading).append(", text=")
+				.append(text).append(", baseImageUrl=").append(baseImageUrl).append(", topic=").append(topic)
+				.append("]");
 		return builder.toString();
 	}
 }

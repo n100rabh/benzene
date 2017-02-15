@@ -1,0 +1,76 @@
+[INFO] [2017-02-14 21:29:50.427] ConfigUtils <init> - /ENV-LOCAL/log.xml
+[INFO] [2017-02-14 21:29:50.428] ConfigUtils <init> - Logging Enabled
+[INFO] [2017-02-14 21:29:50.436] SqlSessionFactory <init> - initializing Sql Session Factory
+[INFO] [2017-02-14 21:29:50.437] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-14 21:29:50.654] Version logVersion - HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] [2017-02-14 21:29:50.660] Environment <clinit> - HHH000206: hibernate.properties not found
+[INFO] [2017-02-14 21:29:50.662] Environment buildBytecodeProvider - HHH000021: Bytecode provider name : javassist
+[INFO] [2017-02-14 21:29:51.303] Version <clinit> - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[INFO] [2017-02-14 21:29:51.528] C3P0ConnectionProvider configure - HHH010002: C3P0 using driver: com.mysql.jdbc.Driver at URL: jdbc:mysql://localhost:3306/vedtest?autoReconnect=true
+[INFO] [2017-02-14 21:29:51.528] C3P0ConnectionProvider configure - HHH10001001: Connection properties: {user=root, password=****}
+[INFO] [2017-02-14 21:29:51.529] C3P0ConnectionProvider configure - HHH10001003: Autocommit mode: false
+[INFO] [2017-02-14 21:29:56.735] C3P0ConnectionProvider configure - HHH10001007: JDBC isolation level: <unknown>
+[INFO] [2017-02-14 21:29:57.303] Dialect <init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+[INFO] [2017-02-14 21:29:57.365] LobCreatorBuilderImpl useContextualLobCreation - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO] [2017-02-14 21:30:04.381] InformationExtractorJdbcDatabaseMetaDataImpl processGetTableResults - HHH000262: Table not found: Branch
+[INFO] [2017-02-14 21:30:04.385] InformationExtractorJdbcDatabaseMetaDataImpl processGetTableResults - HHH000262: Table not found: Branch
+[INFO] [2017-02-14 21:30:04.470] InformationExtractorJdbcDatabaseMetaDataImpl processGetTableResults - HHH000262: Table not found: Chapter
+[INFO] [2017-02-14 21:30:04.472] InformationExtractorJdbcDatabaseMetaDataImpl processGetTableResults - HHH000262: Table not found: Chapter
+[INFO] [2017-02-14 21:30:05.830] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-14 21:30:41.953] SubjectController getSubjects - Request received for Subjects by TeacherId and StudentId
+[INFO] [2017-02-14 21:30:42.144] SubjectController getSubjects - Response:[Subject [id=483, name=Chemistry, state=VERIFIED, description=null, creationDate=2017-01-16 02:22:35.0, createdBy=0, lastUpdatedDate=2017-01-23 00:54:36.0, lastUpdatedBy=0]]
+[INFO] [2017-02-14 21:34:24.335] BranchController createBranch - createBranch Request:Branch [id=null, name=XI, state=null, description=null, creationDate=null, createdBy=12345, lastUpdatedDate=null, lastUpdatedBy=null, sequenceNo=1, viewType=BOARDS, subject=null]
+[INFO] [2017-02-14 21:34:29.818] BranchController createBranch - createBranch Response:Branch [id=486, name=XI, state=ACTIVE, description=null, creationDate=Tue Feb 14 21:34:29 IST 2017, createdBy=12345, lastUpdatedDate=Tue Feb 14 21:34:29 IST 2017, lastUpdatedBy=null, sequenceNo=1, viewType=BOARDS, subject=null]
+[INFO] [2017-02-14 21:47:33.269] ConfigUtils <init> - /ENV-LOCAL/log.xml
+[INFO] [2017-02-14 21:47:33.270] ConfigUtils <init> - Logging Enabled
+[INFO] [2017-02-14 21:47:33.276] SqlSessionFactory <init> - initializing Sql Session Factory
+[INFO] [2017-02-14 21:47:33.277] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-14 21:47:33.576] Version logVersion - HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] [2017-02-14 21:47:33.579] Environment <clinit> - HHH000206: hibernate.properties not found
+[INFO] [2017-02-14 21:47:33.581] Environment buildBytecodeProvider - HHH000021: Bytecode provider name : javassist
+[INFO] [2017-02-14 21:47:34.091] Version <clinit> - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[INFO] [2017-02-14 21:47:34.281] C3P0ConnectionProvider configure - HHH010002: C3P0 using driver: com.mysql.jdbc.Driver at URL: jdbc:mysql://localhost:3306/vedtest?autoReconnect=true
+[INFO] [2017-02-14 21:47:34.281] C3P0ConnectionProvider configure - HHH10001001: Connection properties: {user=root, password=****}
+[INFO] [2017-02-14 21:47:34.282] C3P0ConnectionProvider configure - HHH10001003: Autocommit mode: false
+[INFO] [2017-02-14 21:47:39.509] C3P0ConnectionProvider configure - HHH10001007: JDBC isolation level: <unknown>
+[INFO] [2017-02-14 21:47:39.998] Dialect <init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+[INFO] [2017-02-14 21:47:40.049] LobCreatorBuilderImpl useContextualLobCreation - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO] [2017-02-14 21:47:44.842] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-14 21:49:18.245] BranchController getBranch - Request received for getting Branch for db_id: 486
+[INFO] [2017-02-14 21:49:18.693] BranchController getBranch - getBranch Response:Branch [id=486, name=XI, state=ACTIVE, description=null, creationDate=2017-02-14 21:34:29.0, createdBy=12345, lastUpdatedDate=2017-02-14 21:34:29.0, lastUpdatedBy=null, sequenceNo=1, viewType=BOARDS, subject=Subject [id=483, name=Chemistry, state=VERIFIED, description=null, creationDate=2017-01-16 02:22:35.0, createdBy=0, lastUpdatedDate=2017-01-23 00:54:36.0, lastUpdatedBy=0]]
+[INFO] [2017-02-14 22:17:58.364] ConfigUtils <init> - /ENV-LOCAL/log.xml
+[INFO] [2017-02-14 22:17:58.365] ConfigUtils <init> - Logging Enabled
+[INFO] [2017-02-14 22:17:58.371] SqlSessionFactory <init> - initializing Sql Session Factory
+[INFO] [2017-02-14 22:17:58.372] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-14 22:17:58.586] Version logVersion - HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] [2017-02-14 22:17:58.590] Environment <clinit> - HHH000206: hibernate.properties not found
+[INFO] [2017-02-14 22:17:58.593] Environment buildBytecodeProvider - HHH000021: Bytecode provider name : javassist
+[INFO] [2017-02-14 22:17:59.214] Version <clinit> - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[INFO] [2017-02-14 22:17:59.397] C3P0ConnectionProvider configure - HHH010002: C3P0 using driver: com.mysql.jdbc.Driver at URL: jdbc:mysql://localhost:3306/vedtest?autoReconnect=true
+[INFO] [2017-02-14 22:17:59.398] C3P0ConnectionProvider configure - HHH10001001: Connection properties: {user=root, password=****}
+[INFO] [2017-02-14 22:17:59.399] C3P0ConnectionProvider configure - HHH10001003: Autocommit mode: false
+[INFO] [2017-02-14 22:18:04.568] C3P0ConnectionProvider configure - HHH10001007: JDBC isolation level: <unknown>
+[INFO] [2017-02-14 22:18:04.929] Dialect <init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+[INFO] [2017-02-14 22:18:04.980] LobCreatorBuilderImpl useContextualLobCreation - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO] [2017-02-14 22:18:10.331] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-14 22:18:54.361] SubjectController getSubject - Request received for getting Subject for db_id: 483
+[INFO] [2017-02-14 22:18:54.555] SubjectController getSubject - getSubject Response:Subject [id=483, name=Chemistry, state=VERIFIED, description=null, creationDate=2017-01-16 02:22:35.0, createdBy=0, lastUpdatedDate=2017-01-23 00:54:36.0, lastUpdatedBy=0]
+[INFO] [2017-02-14 22:22:28.194] ConfigUtils <init> - /ENV-LOCAL/log.xml
+[INFO] [2017-02-14 22:22:28.195] ConfigUtils <init> - Logging Enabled
+[INFO] [2017-02-14 22:22:28.202] SqlSessionFactory <init> - initializing Sql Session Factory
+[INFO] [2017-02-14 22:22:28.203] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-14 22:22:28.412] Version logVersion - HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] [2017-02-14 22:22:28.416] Environment <clinit> - HHH000206: hibernate.properties not found
+[INFO] [2017-02-14 22:22:28.418] Environment buildBytecodeProvider - HHH000021: Bytecode provider name : javassist
+[INFO] [2017-02-14 22:22:29.085] Version <clinit> - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[INFO] [2017-02-14 22:22:29.273] C3P0ConnectionProvider configure - HHH010002: C3P0 using driver: com.mysql.jdbc.Driver at URL: jdbc:mysql://localhost:3306/vedtest?autoReconnect=true
+[INFO] [2017-02-14 22:22:29.274] C3P0ConnectionProvider configure - HHH10001001: Connection properties: {user=root, password=****}
+[INFO] [2017-02-14 22:22:29.277] C3P0ConnectionProvider configure - HHH10001003: Autocommit mode: false
+[INFO] [2017-02-14 22:22:34.453] C3P0ConnectionProvider configure - HHH10001007: JDBC isolation level: <unknown>
+[INFO] [2017-02-14 22:22:34.833] Dialect <init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+[INFO] [2017-02-14 22:22:34.884] LobCreatorBuilderImpl useContextualLobCreation - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO] [2017-02-14 22:22:40.834] ConfigUtils <init> - Config Utils started
+[INFO] [2017-02-14 22:22:57.979] SubjectController getSubject - Request received for getting Subject for db_id: 483
+[INFO] [2017-02-14 22:22:58.178] SubjectController getSubject - getSubject Response:Subject [id=483, name=Chemistry, state=VERIFIED, description=null, creationDate=2017-01-16 02:22:35.0, createdBy=0, lastUpdatedDate=2017-01-23 00:54:36.0, lastUpdatedBy=0]
+[INFO] [2017-02-14 22:24:44.764] SubjectController updateSubject - updateSubject Request:Subject [id=483, name=null, state=null, description=null, creationDate=null, createdBy=null, lastUpdatedDate=null, lastUpdatedBy=null]
+[INFO] [2017-02-14 22:24:44.863] SubjectController updateSubject - updateSubject Response:Subject [id=483, name=Chemistry, state=VERIFIED, description=null, creationDate=2017-01-16 02:22:35.0, createdBy=0, lastUpdatedDate=Tue Feb 14 22:24:44 IST 2017, lastUpdatedBy=null]

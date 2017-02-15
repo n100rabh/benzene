@@ -8,11 +8,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import com.benzene.util.entity.AbstractEntity;
+import com.benzene.util.entity.SequencedEntity;
 
 @Entity
 @Table(name = "TopicProblemMapping")
-public class TopicProblemMapping extends AbstractEntity {
+public class TopicProblemMapping extends SequencedEntity {
 
 	@ManyToOne
 	@NotFound(action = NotFoundAction.IGNORE)
@@ -24,17 +24,31 @@ public class TopicProblemMapping extends AbstractEntity {
 	@JoinColumn(name = "problemId")
 	private Problem problem;
 
-	private Integer problemSequenceNo;
-
 	public TopicProblemMapping() {
 		super();
+	}
+
+	public Topic getTopic() {
+		return topic;
+	}
+
+	public void setTopic(Topic topic) {
+		this.topic = topic;
+	}
+
+	public Problem getProblem() {
+		return problem;
+	}
+
+	public void setProblem(Problem problem) {
+		this.problem = problem;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("TopicProblemMapping [problemSequenceNo=").append(problemSequenceNo).append(", toString()=")
-				.append(super.toString()).append("]");
+		builder.append("TopicProblemMapping [").append(super.toString()).append(", topic=").append(topic)
+				.append(", problem=").append(problem).append("]");
 		return builder.toString();
 	}
 }

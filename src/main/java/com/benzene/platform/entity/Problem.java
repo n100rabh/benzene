@@ -13,22 +13,21 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.benzene.platform.enums.OptionId;
 import com.benzene.platform.enums.ProblemLevel;
 import com.benzene.platform.enums.ProblemType;
-import com.benzene.util.entity.AbstractEntity;
+import com.benzene.util.entity.BaseEntity;
 
 @Entity
 @Table(name = "Problem")
 @Component
 @Scope("prototype")
-public class Problem extends AbstractEntity {
+public class Problem extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	private ProblemLevel level;
 	@Enumerated(EnumType.STRING)
 	private ProblemType type;
-	@Lob
-	private String text;
 	@Lob
 	private String question;
 	@Lob
@@ -41,7 +40,10 @@ public class Problem extends AbstractEntity {
 	private String option4;
 	@Lob
 	private String solution;
-	@OneToMany(mappedBy = "problem", cascade=CascadeType.ALL)
+	@Enumerated(EnumType.STRING)
+	private OptionId correctOption;
+	private String baseImageUrl;
+	@OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
 	private Set<TopicProblemMapping> topicProblemMappings;
 
 	public Problem() {
@@ -62,14 +64,6 @@ public class Problem extends AbstractEntity {
 
 	public void setType(ProblemType type) {
 		this.type = type;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
 	}
 
 	public String getQuestion() {
@@ -120,14 +114,42 @@ public class Problem extends AbstractEntity {
 		this.solution = solution;
 	}
 
+	public OptionId getCorrectOption() {
+		return correctOption;
+	}
+
+	public void setCorrectOption(OptionId correctOption) {
+		this.correctOption = correctOption;
+	}
+
+	public String getBaseImageUrl() {
+		return baseImageUrl;
+	}
+
+	public void setBaseImageUrl(String baseImageUrl) {
+		this.baseImageUrl = baseImageUrl;
+	}
+
+	public Set<TopicProblemMapping> getTopicProblemMappings() {
+		return topicProblemMappings;
+	}
+
+	public void setTopicProblemMappings(Set<TopicProblemMapping> topicProblemMappings) {
+		this.topicProblemMappings = topicProblemMappings;
+	}
+
+	public void addTopicProblemMapping(TopicProblemMapping topicProblemMapping) {
+		this.topicProblemMappings.add(topicProblemMapping);
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Problem [level=").append(level).append(", type=").append(type).append(", text=").append(text)
-				.append(", question=").append(question).append(", option1=").append(option1).append(", option2=")
-				.append(option2).append(", option3=").append(option3).append(", option4=").append(option4)
-				.append(", solution=").append(solution).append(", topicProblemMappings=").append(topicProblemMappings)
-				.append(", toString()=").append(super.toString()).append("]");
+		builder.append("Problem [").append(super.toString()).append(", level=").append(level).append(", type=")
+				.append(type).append(", question=").append(question).append(", option1=").append(option1)
+				.append(", option2=").append(option2).append(", option3=").append(option3).append(", option4=")
+				.append(option4).append(", solution=").append(solution).append(", correctOption=").append(correctOption)
+				.append(", baseImageUrl=").append(baseImageUrl).append("]");
 		return builder.toString();
 	}
 }

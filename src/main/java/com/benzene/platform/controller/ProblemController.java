@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.benzene.platform.entity.Problem;
 import com.benzene.platform.manager.ProblemManager;
-import com.benzene.platform.request.GetAbstractReq;
 import com.benzene.util.LogFactory;
 import com.benzene.util.enums.State;
+import com.benzene.util.request.GetAbstractReq;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

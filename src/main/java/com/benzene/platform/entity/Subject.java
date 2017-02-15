@@ -11,37 +11,42 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.benzene.util.entity.AbstractEntity;
+import com.benzene.platform.request.SubjectRequest;
+import com.benzene.util.entity.BaseEntity;
 
 @Entity
 @Table(name = "Subject")
 @Component
 @Scope("prototype")
-public class Subject extends AbstractEntity {
+public class Subject extends BaseEntity {
 
 	@OneToMany(mappedBy="subject", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set<Topic> topics;
+	private Set<Branch> branches;
 	
 	public Subject() {
 		super();
 	}
-
-	public Set<Topic> getTopics() {
-		return topics;
-	}
-
-	public void setTopics(Set<Topic> topics) {
-		this.topics = topics;
+	
+	public Subject(SubjectRequest request) {
+		super(request);
 	}
 	
-	public void addTopic(Topic topic) {
-		this.topics.add(topic);
+	public Set<Branch> getBranches() {
+		return branches;
+	}
+
+	public void setBranches(Set<Branch> branches) {
+		this.branches = branches;
+	}
+
+	public void addBranch(Branch branch) {
+		this.branches.add(branch);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Subject [topics=").append(topics).append(", toString()=").append(super.toString()).append("]");
+		builder.append("Subject [").append(super.toString()).append("]");
 		return builder.toString();
 	}
 }

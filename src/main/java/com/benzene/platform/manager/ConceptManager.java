@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.benzene.platform.entity.Concept;
-import com.benzene.platform.request.GetAbstractReq;
 import com.benzene.util.LogFactory;
 import com.benzene.util.dao.CommonDAO;
 import com.benzene.util.enums.State;
+import com.benzene.util.request.GetAbstractReq;
 
 @Service
 public class ConceptManager {

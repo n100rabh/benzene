@@ -1,4 +1,4 @@
-package com.benzene.platform.request;
+package com.benzene.util.request;
 
 public class GetAbstractReq {
 

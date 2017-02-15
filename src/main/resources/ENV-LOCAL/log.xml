@@ -2,14 +2,14 @@
 <Configuration status="WARN"
 	packages="org.apache.logging.log4j.core,net.kencochrane.raven.log4j2">
     <Properties>
-        <Property name="log-path">platform-logs</Property>
+        <Property name="log-path">benzene_platform-logs</Property>
     </Properties>
     <Appenders>
         <Console name="console-log" target="SYSTEM_OUT">
             <PatternLayout pattern="[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} %M - %msg%n"/>
         </Console>
-        <RollingFile name="info-log" fileName="${log-path}/local-platform-info.log"
-             filePattern="${log-path}/local-platform-info-%d{yyyy-MM-dd}.log">
+        <RollingFile name="info-log" fileName="${log-path}/local-benzene_platform-info.log"
+             filePattern="${log-path}/local-benzene_platform-info-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <pattern>[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} %M - %msg%n</pattern>
             </PatternLayout>
@@ -17,8 +17,8 @@
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingFile>
-        <RollingFile name="error-log" fileName="${log-path}/local-platform-error.log"
-             filePattern="${log-path}/local-platform-error-%d{yyyy-MM-dd}.log">
+        <RollingFile name="error-log" fileName="${log-path}/local-benzene_platform-error.log"
+             filePattern="${log-path}/local-benzene_platform-error-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <pattern>[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} %M - %msg%n</pattern>
             </PatternLayout>
