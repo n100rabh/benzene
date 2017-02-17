@@ -1,6 +1,8 @@
 package com.benzene.platform.manager;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -10,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.benzene.platform.entity.Concept;
 import com.benzene.platform.entity.Topic;
+import com.benzene.platform.request.ConceptRequest;
+import com.benzene.platform.request.TopicRequest;
+import com.benzene.platform.response.ConceptResponse;
+import com.benzene.platform.response.TopicResponse;
 import com.benzene.util.LogFactory;
 import com.benzene.util.dao.CommonDAO;
 import com.benzene.util.enums.State;
@@ -31,18 +37,20 @@ public class TopicManager {
 	@SuppressWarnings("static-access")
 	private Logger logger = logfactory.getLogger(TopicManager.class);
 
-	public Topic addOrUpdateTopic(Topic topic) {
+	public TopicResponse addOrUpdateTopic(TopicRequest request) {
 		Session session = sqlSessionfactory.getSessionFactory().openSession();
 		Transaction transaction = session.getTransaction();
 
-		Long id = topic.getId();
+		Long id = request.getId();
+		Topic topic1 = new Topic(request);
+		Topic topic = topic1;
 		try {
 			transaction.begin();
 			if (id == null) {
 				commonDAO.saveEntity(topic, session);
 			} else {
-				Topic topic1 = (Topic) commonDAO.getEntity(id, null, Topic.class, session);
-				topic = addUpdates(topic1, topic);
+				topic = (Topic) commonDAO.getEntity(id, null, Topic.class, session);
+				topic.addUpdates(topic1);
 				commonDAO.updateEntity(topic, session);
 			}
 			transaction.commit();
@@ -50,24 +58,33 @@ public class TopicManager {
 			session.close();
 		}
 
-		return topic;
+		return new TopicResponse(topic);
 	}
 
-	public Topic getTopic(Long id, State state) {
-		return commonDAO.getEntity(id, state, Topic.class);
+	public TopicResponse getTopic(Long id, State state) {
+		Topic topic = commonDAO.getEntity(id, state, Topic.class);
+		return new TopicResponse(topic);
 	}
 
-	public List<Topic> getTopics(GetAbstractReq req) {
-		return commonDAO.getEntities(Topic.class, req, null);
+	public List<TopicResponse> getTopics(GetAbstractReq req) {
+		List<Topic> topics = commonDAO.getEntities(Topic.class, req, null);
+		return getListResponse(topics);
 	}
 
 	public void updateTopics(List<Topic> slist) {
 		commonDAO.updateEntities(slist, Topic.class.getSimpleName());
 	}
+	
+	public void deleteTopic(Long id) {
+		Topic topic = commonDAO.getEntity(id, null, Topic.class);
+		topic.delete();
+	}
 
-	public Concept addConcept(Long id, Concept concept) {
+	public ConceptResponse addConcept(Long id, ConceptRequest request) {
 		Session session = sqlSessionfactory.getSessionFactory().openSession();
 		Transaction transaction = session.getTransaction();
+		
+		Concept concept = new Concept(request);
 		try {
 			transaction.begin();
 			Topic topic = (Topic) commonDAO.getEntity(id, null, Topic.class, session);
@@ -78,18 +95,28 @@ public class TopicManager {
 		} finally {
 			session.close();
 		}
-		concept.setTopic(null);
-		return concept;
+		return new ConceptResponse(concept);
+	}
+	
+	public List<ConceptResponse> getConcepts(Long id) {
+		Topic topic = commonDAO.getEntity(id, null, Topic.class);
+		Set<Concept> concepts = topic.getConcepts();
+		return getConceptList(concepts);
 	}
 
-	Topic addUpdates(Topic oldObj, Topic newObj) {
-		if (newObj.getState() != null) {
-			oldObj.setState(newObj.getState());
+	private List<TopicResponse> getListResponse(List<Topic> topics) {
+		List<TopicResponse> responses = new ArrayList<TopicResponse>();
+		for(Topic topic :  topics) {
+			responses.add(new TopicResponse(topic));
 		}
-		if (newObj.getName() != null) {
-			oldObj.setName(newObj.getName());
+		return responses;
+	}
+	
+	private List<ConceptResponse> getConceptList(Set<Concept> concepts) {
+		List<ConceptResponse> responses = new ArrayList<ConceptResponse>();
+		for(Concept concept :  concepts) {
+			responses.add(new ConceptResponse(concept));
 		}
-		oldObj.setLastUpdatedBy(newObj.getLastUpdatedBy());
-		return oldObj;
+		return responses;
 	}
 }

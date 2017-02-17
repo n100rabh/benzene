@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -43,7 +44,7 @@ public class Problem extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private OptionId correctOption;
 	private String baseImageUrl;
-	@OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<TopicProblemMapping> topicProblemMappings;
 
 	public Problem() {
@@ -140,6 +141,14 @@ public class Problem extends BaseEntity {
 
 	public void addTopicProblemMapping(TopicProblemMapping topicProblemMapping) {
 		this.topicProblemMappings.add(topicProblemMapping);
+	}
+	
+	@Override
+	public void delete() {
+		super.delete();
+		for(TopicProblemMapping topicProblemMapping : this.topicProblemMappings) {
+			topicProblemMapping.delete();
+		}
 	}
 
 	@Override

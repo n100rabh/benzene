@@ -27,6 +27,13 @@ public abstract class SequencedEntity extends BaseEntity
 	public void setSequenceNo(Integer sequenceNo) {
 		this.sequenceNo = sequenceNo;
 	}
+	
+	public void addUpdates(SequencedEntity entity) {
+		super.addUpdates(entity);
+		if(entity.getSequenceNo() != null) {
+			this.setSequenceNo(entity.getSequenceNo());
+		}
+	}
 
 	@Override
 	public String toString() {

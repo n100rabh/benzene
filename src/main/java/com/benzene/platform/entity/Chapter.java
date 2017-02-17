@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.benzene.platform.enums.BranchViewType;
+import com.benzene.platform.request.ChapterRequest;
 import com.benzene.util.entity.SequencedEntity;
 
 @Entity
@@ -31,11 +33,16 @@ public class Chapter extends SequencedEntity {
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "branchId")
 	private Branch branch;
-	@OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Topic> topics;
 
 	public Chapter() {
 		super();
+	}
+
+	public Chapter(ChapterRequest request) {
+		super(request);
+		this.viewType = request.getViewType();
 	}
 
 	public BranchViewType getViewType() {
@@ -64,6 +71,21 @@ public class Chapter extends SequencedEntity {
 	
 	public void addTopic(Topic topic) {
 		this.topics.add(topic);
+	}
+	
+	public void addUpdates(Chapter chapter) {
+		super.addUpdates(chapter);
+		if (chapter.getViewType() != null) {
+			this.setViewType(chapter.getViewType());
+		}
+	}
+	
+	@Override
+	public void delete() {
+		super.delete();
+		for(Topic topic : this.topics) {
+			topic.delete();
+		}
 	}
 
 	@Override

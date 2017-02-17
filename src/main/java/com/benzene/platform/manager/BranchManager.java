@@ -1,6 +1,8 @@
 package com.benzene.platform.manager;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -10,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.benzene.platform.entity.Branch;
 import com.benzene.platform.entity.Chapter;
+import com.benzene.platform.request.BranchRequest;
+import com.benzene.platform.request.ChapterRequest;
+import com.benzene.platform.response.BranchResponse;
+import com.benzene.platform.response.ChapterResponse;
 import com.benzene.util.LogFactory;
 import com.benzene.util.dao.CommonDAO;
 import com.benzene.util.enums.State;
@@ -31,18 +37,20 @@ public class BranchManager {
 	@SuppressWarnings("static-access")
 	private Logger logger = logfactory.getLogger(BranchManager.class);
 
-	public Branch addOrUpdateBranch(Branch branch) {
+	public BranchResponse addOrUpdateBranch(BranchRequest request) {
 		Session session = sqlSessionfactory.getSessionFactory().openSession();
 		Transaction transaction = session.getTransaction();
 
-		Long id = branch.getId();
+		Long id = request.getId();
+		Branch branch1 = new Branch(request);
+		Branch branch = branch1;
 		try {
 			transaction.begin();
 			if (id == null) {
 				commonDAO.saveEntity(branch, session);
 			} else {
-				Branch branch1 = (Branch) commonDAO.getEntity(id, null, Branch.class, session);
-				branch = addUpdates(branch1, branch);
+				branch = (Branch) commonDAO.getEntity(id, null, Branch.class, session);
+				branch.addUpdates(branch1);
 				commonDAO.updateEntity(branch, session);
 			}
 			transaction.commit();
@@ -50,24 +58,33 @@ public class BranchManager {
 			session.close();
 		}
 
-		return branch;
+		return new BranchResponse(branch);
 	}
 
-	public Branch getBranch(Long id, State state) {
-		return commonDAO.getEntity(id, state, Branch.class);
+	public BranchResponse getBranch(Long id, State state) {
+		Branch branch = commonDAO.getEntity(id, state, Branch.class);
+		return new BranchResponse(branch);
 	}
 
-	public List<Branch> getBranchs(GetAbstractReq req) {
-		return commonDAO.getEntities(Branch.class, req, null);
+	public List<BranchResponse> getBranches(GetAbstractReq req) {
+		List<Branch> branchs = commonDAO.getEntities(Branch.class, req, null);
+		return getListResponse(branchs);
 	}
 
 	public void updateBranchs(List<Branch> slist) {
 		commonDAO.updateEntities(slist, Branch.class.getSimpleName());
 	}
+	
+	public void deleteBranch(Long id) {
+		Branch branch = commonDAO.getEntity(id, null, Branch.class);
+		branch.delete();
+	}
 
-	public Chapter addChapter(Long id, Chapter chapter) {
+	public ChapterResponse addChapter(Long id, ChapterRequest request) {
 		Session session = sqlSessionfactory.getSessionFactory().openSession();
 		Transaction transaction = session.getTransaction();
+		
+		Chapter chapter = new Chapter(request);
 		try {
 			transaction.begin();
 			Branch branch = (Branch) commonDAO.getEntity(id, null, Branch.class, session);
@@ -78,18 +95,28 @@ public class BranchManager {
 		} finally {
 			session.close();
 		}
-		chapter.setBranch(null);
-		return chapter;
+		return new ChapterResponse(chapter);
+	}
+	
+	public List<ChapterResponse> getChapters(Long id) {
+		Branch branch = commonDAO.getEntity(id, null, Branch.class);
+		Set<Chapter> chapters = branch.getChapters();
+		return getChapterList(chapters);
 	}
 
-	Branch addUpdates(Branch oldObj, Branch newObj) {
-		if (newObj.getState() != null) {
-			oldObj.setState(newObj.getState());
+	private List<BranchResponse> getListResponse(List<Branch> branches) {
+		List<BranchResponse> responses = new ArrayList<BranchResponse>();
+		for(Branch branch :  branches) {
+			responses.add(new BranchResponse(branch));
 		}
-		if (newObj.getName() != null) {
-			oldObj.setName(newObj.getName());
+		return responses;
+	}
+	
+	private List<ChapterResponse> getChapterList(Set<Chapter> chapters) {
+		List<ChapterResponse> responses = new ArrayList<ChapterResponse>();
+		for(Chapter chapter :  chapters) {
+			responses.add(new ChapterResponse(chapter));
 		}
-		oldObj.setLastUpdatedBy(newObj.getLastUpdatedBy());
-		return oldObj;
+		return responses;
 	}
 }

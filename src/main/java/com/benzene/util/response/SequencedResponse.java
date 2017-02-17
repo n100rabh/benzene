@@ -6,9 +6,19 @@ public abstract class SequencedResponse extends BaseResponse {
 
 	private Integer sequenceNo;
 
+	public SequencedResponse() {
+	}
+	
 	public SequencedResponse(SequencedEntity entity) {
 		super(entity);
 		this.sequenceNo = entity.getSequenceNo();
+	}
+
+	public Integer getSequenceNo() {
+		return sequenceNo;
+	}
+	public void setSequenceNo(Integer sequenceNo) {
+		this.sequenceNo = sequenceNo;
 	}
 
 	@Override

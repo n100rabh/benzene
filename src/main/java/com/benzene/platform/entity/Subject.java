@@ -20,17 +20,17 @@ import com.benzene.util.entity.BaseEntity;
 @Scope("prototype")
 public class Subject extends BaseEntity {
 
-	@OneToMany(mappedBy="subject", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Branch> branches;
-	
+
 	public Subject() {
 		super();
 	}
-	
+
 	public Subject(SubjectRequest request) {
 		super(request);
 	}
-	
+
 	public Set<Branch> getBranches() {
 		return branches;
 	}
@@ -41,6 +41,14 @@ public class Subject extends BaseEntity {
 
 	public void addBranch(Branch branch) {
 		this.branches.add(branch);
+	}
+
+	@Override
+	public void delete() {
+		super.delete();
+		for (Branch branch : this.branches) {
+			branch.delete();
+		}
 	}
 
 	@Override

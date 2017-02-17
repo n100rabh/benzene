@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -32,13 +33,13 @@ public class Branch extends SequencedEntity {
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "subjectId")
 	private Subject subject;
-	@OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Chapter> chapters;
 
 	public Branch() {
 		super();
 	}
-	
+
 	public Branch(BranchRequest request) {
 		super(request);
 		this.viewType = request.getViewType();
@@ -70,6 +71,21 @@ public class Branch extends SequencedEntity {
 
 	public void addChapter(Chapter chapter) {
 		this.chapters.add(chapter);
+	}
+
+	public void addUpdates(Branch branch) {
+		super.addUpdates(branch);
+		if (branch.getViewType() != null) {
+			this.setViewType(branch.getViewType());
+		}
+	}
+
+	@Override
+	public void delete() {
+		super.delete();
+		for (Chapter chapter : this.chapters) {
+			chapter.delete();
+		}
 	}
 
 	@Override

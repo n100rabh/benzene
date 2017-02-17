@@ -42,13 +42,14 @@ public class SubjectManager {
 		Transaction transaction = session.getTransaction();
 
 		Long id = request.getId();
-		Subject subject = new Subject(request);
+		Subject subject1 = new Subject(request);
+		Subject subject = subject1;
 		try {
 			transaction.begin();
 			if (id == null) {
 				commonDAO.saveEntity(subject, session);
 			} else {
-				Subject subject1 = (Subject) commonDAO.getEntity(id, null, Subject.class, session);
+				subject = (Subject) commonDAO.getEntity(id, null, Subject.class, session);
 				subject.addUpdates(subject1);
 				commonDAO.updateEntity(subject, session);
 			}
@@ -72,6 +73,11 @@ public class SubjectManager {
 
 	public void updateSubjects(List<Subject> slist) {
 		commonDAO.updateEntities(slist, Subject.class.getSimpleName());
+	}
+	
+	public void deleteSubject(Long id) {
+		Subject subject = commonDAO.getEntity(id, null, Subject.class);
+		subject.delete();
 	}
 
 	public BranchResponse addBranch(Long id, BranchRequest request) {

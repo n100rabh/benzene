@@ -11,6 +11,7 @@ import org.hibernate.annotations.NotFoundAction;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.benzene.platform.request.ConceptRequest;
 import com.benzene.util.entity.SequencedEntity;
 
 @Entity
@@ -30,6 +31,13 @@ public class Concept extends SequencedEntity {
 
 	public Concept() {
 		super();
+	}
+
+	public Concept(ConceptRequest request) {
+		super(request);
+		this.heading = request.getHeading();
+		this.text = request.getText();
+		this.baseImageUrl = request.getBaseImageUrl();
 	}
 
 	public String getHeading() {
@@ -64,6 +72,19 @@ public class Concept extends SequencedEntity {
 		this.baseImageUrl = baseImageUrl;
 	}
 
+	public void addUpdates(Concept concept) {
+		super.addUpdates(concept);
+		if (concept.getHeading() != null) {
+			this.setHeading(concept.getHeading());
+		}
+		if (concept.getText() != null) {
+			this.setText(concept.getText());
+		}
+		if(concept.getBaseImageUrl() != null) {
+			this.setBaseImageUrl(concept.getBaseImageUrl());
+		}
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

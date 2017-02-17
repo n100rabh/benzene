@@ -119,6 +119,10 @@ public abstract class BaseEntity {
 		this.description = description;
 	}
 	
+	public void delete() {
+		this.state = State.INACTIVE;
+	}
+	
 	public void addUpdates(BaseEntity entity) {
 		if (entity.getName() != null) {
 			this.setName(entity.getName());

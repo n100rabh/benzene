@@ -1,6 +1,8 @@
 package com.benzene.platform.manager;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -10,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.benzene.platform.entity.Topic;
 import com.benzene.platform.entity.Chapter;
+import com.benzene.platform.request.TopicRequest;
+import com.benzene.platform.request.ChapterRequest;
+import com.benzene.platform.response.TopicResponse;
+import com.benzene.platform.response.ChapterResponse;
 import com.benzene.util.LogFactory;
 import com.benzene.util.dao.CommonDAO;
 import com.benzene.util.enums.State;
@@ -31,18 +37,20 @@ public class ChapterManager {
 	@SuppressWarnings("static-access")
 	private Logger logger = logfactory.getLogger(ChapterManager.class);
 
-	public Chapter addOrUpdateChapter(Chapter chapter) {
+	public ChapterResponse addOrUpdateChapter(ChapterRequest request) {
 		Session session = sqlSessionfactory.getSessionFactory().openSession();
 		Transaction transaction = session.getTransaction();
 
-		Long id = chapter.getId();
+		Long id = request.getId();
+		Chapter chapter1 = new Chapter(request);
+		Chapter chapter = chapter1;
 		try {
 			transaction.begin();
 			if (id == null) {
 				commonDAO.saveEntity(chapter, session);
 			} else {
-				Chapter chapter1 = (Chapter) commonDAO.getEntity(id, null, Chapter.class, session);
-				chapter = addUpdates(chapter1, chapter);
+				chapter = (Chapter) commonDAO.getEntity(id, null, Chapter.class, session);
+				chapter.addUpdates(chapter1);
 				commonDAO.updateEntity(chapter, session);
 			}
 			transaction.commit();
@@ -50,24 +58,33 @@ public class ChapterManager {
 			session.close();
 		}
 
-		return chapter;
+		return new ChapterResponse(chapter);
 	}
 
-	public Chapter getChapter(Long id, State state) {
-		return commonDAO.getEntity(id, state, Chapter.class);
+	public ChapterResponse getChapter(Long id, State state) {
+		Chapter chapter = commonDAO.getEntity(id, state, Chapter.class);
+		return new ChapterResponse(chapter);
 	}
 
-	public List<Chapter> getChapters(GetAbstractReq req) {
-		return commonDAO.getEntities(Chapter.class, req, null);
+	public List<ChapterResponse> getChapters(GetAbstractReq req) {
+		List<Chapter> chapters = commonDAO.getEntities(Chapter.class, req, null);
+		return getListResponse(chapters);
 	}
 
 	public void updateChapters(List<Chapter> slist) {
 		commonDAO.updateEntities(slist, Chapter.class.getSimpleName());
 	}
+	
+	public void deleteChapter(Long id) {
+		Chapter chapter = commonDAO.getEntity(id, null, Chapter.class);
+		chapter.delete();
+	}
 
-	public Topic addTopic(Long id, Topic topic) {
+	public TopicResponse addTopic(Long id, TopicRequest request) {
 		Session session = sqlSessionfactory.getSessionFactory().openSession();
 		Transaction transaction = session.getTransaction();
+		
+		Topic topic = new Topic(request);
 		try {
 			transaction.begin();
 			Chapter chapter = (Chapter) commonDAO.getEntity(id, null, Chapter.class, session);
@@ -78,18 +95,28 @@ public class ChapterManager {
 		} finally {
 			session.close();
 		}
-		topic.setChapter(null);
-		return topic;
+		return new TopicResponse(topic);
+	}
+	
+	public List<TopicResponse> getTopics(Long id) {
+		Chapter chapter = commonDAO.getEntity(id, null, Chapter.class);
+		Set<Topic> topices = chapter.getTopics();
+		return getTopicList(topices);
 	}
 
-	Chapter addUpdates(Chapter oldObj, Chapter newObj) {
-		if (newObj.getState() != null) {
-			oldObj.setState(newObj.getState());
+	private List<ChapterResponse> getListResponse(List<Chapter> chapters) {
+		List<ChapterResponse> responses = new ArrayList<ChapterResponse>();
+		for(Chapter chapter :  chapters) {
+			responses.add(new ChapterResponse(chapter));
 		}
-		if (newObj.getName() != null) {
-			oldObj.setName(newObj.getName());
+		return responses;
+	}
+	
+	private List<TopicResponse> getTopicList(Set<Topic> topices) {
+		List<TopicResponse> responses = new ArrayList<TopicResponse>();
+		for(Topic topic :  topices) {
+			responses.add(new TopicResponse(topic));
 		}
-		oldObj.setLastUpdatedBy(newObj.getLastUpdatedBy());
-		return oldObj;
+		return responses;
 	}
 }

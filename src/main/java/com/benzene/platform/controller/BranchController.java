@@ -1,5 +1,7 @@
 package com.benzene.platform.controller;
 
+import java.util.List;
+
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -7,13 +9,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.benzene.platform.entity.Branch;
 import com.benzene.platform.manager.BranchManager;
+import com.benzene.platform.request.BranchRequest;
+import com.benzene.platform.request.ChapterRequest;
+import com.benzene.platform.response.ChapterResponse;
 import com.benzene.util.LogFactory;
 import com.benzene.util.enums.State;
+import com.benzene.util.response.BaseResponse;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,21 +41,20 @@ public class BranchController {
 	@ApiOperation(value = "Get a Branch", notes = "Returns branch")
 	@RequestMapping(value = "branch/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public Branch getBranch(@PathVariable("id") Long id) throws Throwable {
+	public BaseResponse getBranch(@PathVariable("id") Long id) throws Throwable {
 		logger.info("Request received for getting Branch for db_id: " + id);
-		Branch response = branchManager.getBranch(id, null);
-		response.setSubject(null);
+		BaseResponse response = branchManager.getBranch(id, null);
 		logger.info("getBranch Response:" + response.toString());
 		return response;
 	}
 
 	@ApiOperation(value = "Update Branch", notes = "Returns created branch")
-	@RequestMapping(value = "branch/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "branch/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Branch updateBranch(@PathVariable("id") Long id, @RequestBody Branch branch) throws Throwable {
-		branch.setId(id);
-		logger.info("updateBranch Request:" + branch.toString());
-		Branch response = branchManager.addOrUpdateBranch(branch);
+	public BaseResponse updateBranch(@PathVariable("id") Long id, @RequestBody BranchRequest request) throws Throwable {
+		request.setId(id);
+		logger.info("updateBranch Request:" + request.toString());
+		BaseResponse response = branchManager.addOrUpdateBranch(request);
 		logger.info("updateBranch Response:" + response.toString());
 		return response;
 	}
@@ -59,10 +64,32 @@ public class BranchController {
 	@ResponseBody
 	public void deleteBranch(@PathVariable("id") Long id) throws Throwable {
 		logger.info("deleteBranch Request:" + id);
-		Branch branch = new Branch();
-		branch.setId(id);
-		branch.setState(State.INACTIVE);
-		Branch response = branchManager.addOrUpdateBranch(branch);
+		BranchRequest request = new BranchRequest();
+		request.setId(id);
+		request.setState(State.INACTIVE);
+		BaseResponse response = branchManager.addOrUpdateBranch(request);
 		logger.info("updateBranch Response:" + response.toString());
+	}
+	
+	@ApiOperation(value = "Create Chapter in Branch", notes = "Returns created chapter")
+	@RequestMapping(value = "branch/{id}/chapter", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public BaseResponse createChapter(@PathVariable("id") Long id, @RequestBody ChapterRequest request) throws Throwable {
+		logger.info("createChapter Request:" + request.toString());
+		BaseResponse response = branchManager.addChapter(id, request);
+		logger.info("createChapter Response:" + response.toString());
+		return response;
+	}
+	
+	@ApiOperation(value = "Get Chapters By Branch", notes = "Returns list of chapters")
+	@RequestMapping(value = "branch/{id}/chapters", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ChapterResponse> getChapters(@PathVariable("id") Long id,
+			@RequestParam(value = "start", required = false) Integer start,
+			@RequestParam(value = "size", required = false) Integer size) throws Throwable {
+		logger.info("Request received for Chapteres");
+		List<ChapterResponse> response = branchManager.getChapters(id);
+		logger.info("Response:" + response.toString());
+		return response;
 	}
 }

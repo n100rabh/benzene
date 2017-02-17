@@ -1,19 +1,19 @@
 package com.benzene.platform.response;
 
-import com.benzene.platform.entity.Branch;
+import com.benzene.platform.entity.Chapter;
 import com.benzene.platform.enums.BranchViewType;
 import com.benzene.util.response.SequencedResponse;
 
-public class BranchResponse extends SequencedResponse{
+public class ChapterResponse extends SequencedResponse{
 
 	private BranchViewType viewType;
 	
-	public BranchResponse() {
+	public ChapterResponse() {
 	}
 
-	public BranchResponse(Branch branch) {
-		super(branch);
-		this.viewType = branch.getViewType();
+	public ChapterResponse(Chapter chapter) {
+		super(chapter);
+		this.viewType = chapter.getViewType();
 	}
 
 	public BranchViewType getViewType() {
@@ -26,7 +26,7 @@ public class BranchResponse extends SequencedResponse{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("BranchResponse [").append(super.toString()).append(", viewType=").append(viewType)
+		builder.append("ChapterResponse [").append(super.toString()).append(", viewType=").append(viewType)
 				.append("]");
 		return builder.toString();
 	}
