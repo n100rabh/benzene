@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.benzene.platform.request.ProblemRequest;
 import com.benzene.util.entity.SequencedEntity;
 
 @Entity
@@ -26,6 +27,10 @@ public class TopicProblemMapping extends SequencedEntity {
 
 	public TopicProblemMapping() {
 		super();
+	}
+	
+	public TopicProblemMapping(ProblemRequest request) {
+		super(request);
 	}
 
 	public Topic getTopic() {

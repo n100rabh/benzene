@@ -1,16 +1,22 @@
 package com.benzene.platform.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.benzene.platform.entity.Problem;
+import com.benzene.platform.request.ProblemRequest;
+import com.benzene.platform.response.ProblemResponse;
 import com.benzene.util.LogFactory;
 import com.benzene.util.dao.CommonDAO;
 import com.benzene.util.enums.State;
 import com.benzene.util.request.GetAbstractReq;
+import com.benzene.util.sessionfactory.SqlSessionFactory;
 
 @Service
 public class ProblemManager {
@@ -21,68 +27,60 @@ public class ProblemManager {
 	@Autowired
 	private LogFactory logfactory;
 
+	@Autowired
+	private SqlSessionFactory sqlSessionfactory;
+
 	@SuppressWarnings("static-access")
 	private Logger logger = logfactory.getLogger(ProblemManager.class);
 
-	public Problem addOrUpdateProblem(Problem problem) {
+	public ProblemResponse addOrUpdateProblem(ProblemRequest request) {
+		Session session = sqlSessionfactory.getSessionFactory().openSession();
+		Transaction transaction = session.getTransaction();
 
-		Long id = problem.getId();
-
-		if (id == null) {
-			commonDAO.saveEntity(problem);
-		} else {
-			Problem problem1 = (Problem) commonDAO.getEntity(id, null, Problem.class);
-			problem = addUpdates(problem1, problem);
-			commonDAO.updateEntity(problem);
+		Long id = request.getId();
+		Problem problem1 = new Problem(request);
+		Problem problem = problem1;
+		try {
+			transaction.begin();
+			if (id == null) {
+				commonDAO.saveEntity(problem, session);
+			} else {
+				problem = (Problem) commonDAO.getEntity(id, null, Problem.class, session);
+				problem.addUpdates(problem1);
+				commonDAO.updateEntity(problem, session);
+			}
+			transaction.commit();
+		} finally {
+			session.close();
 		}
 
-		return problem;
+		return new ProblemResponse(problem);
 	}
 
-	public Problem getProblem(Long id, State state) {
-		return commonDAO.getEntity(id, state, Problem.class);
+	public ProblemResponse getProblem(Long id, State state) {
+		Problem problem = commonDAO.getEntity(id, state, Problem.class);
+		return new ProblemResponse(problem);
 	}
 
-	public List<Problem> getProblems(GetAbstractReq req) {
-		return commonDAO.getEntities(Problem.class, req, null);
+	public List<ProblemResponse> getProblems(GetAbstractReq req) {
+		List<Problem> problems = commonDAO.getEntities(Problem.class, req, null);
+		return getListResponse(problems);
 	}
 
 	public void updateProblems(List<Problem> slist) {
 		commonDAO.updateEntities(slist, Problem.class.getSimpleName());
 	}
+	
+	public void deleteProblem(Long id) {
+		Problem problem = commonDAO.getEntity(id, null, Problem.class);
+		problem.delete();
+	}
 
-	Problem addUpdates(Problem oldObj, Problem newObj) {
-		if (newObj.getState() != null) {
-			oldObj.setState(newObj.getState());
+	private List<ProblemResponse> getListResponse(List<Problem> problems) {
+		List<ProblemResponse> responses = new ArrayList<ProblemResponse>();
+		for(Problem problem :  problems) {
+			responses.add(new ProblemResponse(problem));
 		}
-		if (newObj.getName() != null) {
-			oldObj.setName(newObj.getName());
-		}
-		if (newObj.getLevel() != null) {
-			oldObj.setLevel(newObj.getLevel());
-		}
-		if (newObj.getType() != null) {
-			oldObj.setType(newObj.getType());
-		}
-		if (newObj.getQuestion() != null) {
-			oldObj.setQuestion(newObj.getQuestion());
-		}
-		if (newObj.getOption1() != null) {
-			oldObj.setOption1(newObj.getOption1());
-		}
-		if (newObj.getOption2() != null) {
-			oldObj.setOption2(newObj.getOption2());
-		}
-		if (newObj.getOption3() != null) {
-			oldObj.setOption3(newObj.getOption3());
-		}
-		if (newObj.getOption4() != null) {
-			oldObj.setOption4(newObj.getOption4());
-		}
-		if (newObj.getSolution() != null) {
-			oldObj.setSolution(newObj.getSolution());
-		}
-		oldObj.setLastUpdatedBy(newObj.getLastUpdatedBy());
-		return oldObj;
+		return responses;
 	}
 }

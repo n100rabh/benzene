@@ -1,5 +1,6 @@
 package com.benzene.util.response;
 
+import com.benzene.util.entity.BaseEntity;
 import com.benzene.util.entity.SequencedEntity;
 
 public abstract class SequencedResponse extends BaseResponse {
@@ -12,6 +13,10 @@ public abstract class SequencedResponse extends BaseResponse {
 	public SequencedResponse(SequencedEntity entity) {
 		super(entity);
 		this.sequenceNo = entity.getSequenceNo();
+	}
+	
+	public SequencedResponse(BaseEntity entity) {
+		super(entity);
 	}
 
 	public Integer getSequenceNo() {

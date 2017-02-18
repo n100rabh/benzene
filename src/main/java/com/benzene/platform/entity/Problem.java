@@ -1,5 +1,6 @@
 package com.benzene.platform.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.benzene.platform.enums.OptionId;
 import com.benzene.platform.enums.ProblemLevel;
 import com.benzene.platform.enums.ProblemType;
+import com.benzene.platform.request.ProblemRequest;
 import com.benzene.util.entity.BaseEntity;
 
 @Entity
@@ -49,6 +51,20 @@ public class Problem extends BaseEntity {
 
 	public Problem() {
 		super();
+	}
+
+	public Problem(ProblemRequest request) {
+		super(request);
+		this.level = request.getLevel();
+		this.type = request.getType();
+		this.question = request.getQuestion();
+		this.option1 = request.getOption1();
+		this.option2 = request.getOption2();
+		this.option3 = request.getOption3();
+		this.option4 = request.getOption4();
+		this.solution = request.getSolution();
+		this.correctOption = request.getCorrectOption();
+		this.baseImageUrl = request.getBaseImageUrl();
 	}
 
 	public ProblemLevel getLevel() {
@@ -140,7 +156,38 @@ public class Problem extends BaseEntity {
 	}
 
 	public void addTopicProblemMapping(TopicProblemMapping topicProblemMapping) {
+		if(this.topicProblemMappings == null) {
+			this.topicProblemMappings = new HashSet<TopicProblemMapping>();
+		}
 		this.topicProblemMappings.add(topicProblemMapping);
+	}
+	
+	void addUpdates(Problem problem) {
+		super.addUpdates(problem);
+		if (problem.getLevel() != null) {
+			this.setLevel(problem.getLevel());
+		}
+		if (problem.getType() != null) {
+			this.setType(problem.getType());
+		}
+		if (problem.getQuestion() != null) {
+			this.setQuestion(problem.getQuestion());
+		}
+		if (problem.getOption1() != null) {
+			this.setOption1(problem.getOption1());
+		}
+		if (problem.getOption2() != null) {
+			this.setOption2(problem.getOption2());
+		}
+		if (problem.getOption3() != null) {
+			this.setOption3(problem.getOption3());
+		}
+		if (problem.getOption4() != null) {
+			this.setOption4(problem.getOption4());
+		}
+		if (problem.getSolution() != null) {
+			this.setSolution(problem.getSolution());
+		}
 	}
 	
 	@Override

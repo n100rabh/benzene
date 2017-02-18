@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.benzene.platform.manager.TopicManager;
 import com.benzene.platform.request.ConceptRequest;
+import com.benzene.platform.request.ProblemRequest;
 import com.benzene.platform.request.TopicRequest;
 import com.benzene.platform.response.ConceptResponse;
+import com.benzene.platform.response.ProblemResponse;
 import com.benzene.util.LogFactory;
 import com.benzene.util.enums.State;
 import com.benzene.util.response.BaseResponse;
@@ -89,6 +91,28 @@ public class TopicController {
 			@RequestParam(value = "size", required = false) Integer size) throws Throwable {
 		logger.info("Request received for Concepts");
 		List<ConceptResponse> response = topicManager.getConcepts(id);
+		logger.info("Response:" + response.toString());
+		return response;
+	}
+	
+	@ApiOperation(value = "Create Problem in Topic", notes = "Returns created problem")
+	@RequestMapping(value = "topic/{id}/problem", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public BaseResponse createProblem(@PathVariable("id") Long id, @RequestBody ProblemRequest request) throws Throwable {
+		logger.info("createProblem Request:" + request.toString());
+		BaseResponse response = topicManager.addProblem(id, request);
+		logger.info("createProblem Response:" + response.toString());
+		return response;
+	}
+	
+	@ApiOperation(value = "Get Problems By Topic", notes = "Returns list of problems")
+	@RequestMapping(value = "topic/{id}/problems", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ProblemResponse> getProblems(@PathVariable("id") Long id,
+			@RequestParam(value = "start", required = false) Integer start,
+			@RequestParam(value = "size", required = false) Integer size) throws Throwable {
+		logger.info("Request received for Problems");
+		List<ProblemResponse> response = topicManager.getProblems(id);
 		logger.info("Response:" + response.toString());
 		return response;
 	}
