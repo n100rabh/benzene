@@ -1,7 +1,6 @@
 package com.benzene.platform.manager;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -119,12 +118,36 @@ public class TopicManager {
 			transaction.begin();
 			Topic topic = (Topic) commonDAO.getEntity(id, null, Topic.class, session);
 			commonDAO.saveEntity(problem, session);
-//			problem = (Problem) commonDAO.getEntity(id, null, Problem.class, session);
 			commonDAO.setEntityDefaultProperties(topicProblemMapping);
 			topic.addTopicProblemMapping(topicProblemMapping);
 			problem.addTopicProblemMapping(topicProblemMapping);
 			topicProblemMapping.setProblem(problem);
 			topicProblemMapping.setTopic(topic);
+			transaction.commit();
+		} finally {
+			session.close();
+		}
+		ProblemResponse response = new ProblemResponse(problem);
+		response.setSequenceNo(topicProblemMapping.getSequenceNo());
+		return response;
+	}
+	
+	public ProblemResponse addExistingProblem(Long id,Long problemId,Integer sequenceNo) {
+		Session session = sqlSessionfactory.getSessionFactory().openSession();
+		Transaction transaction = session.getTransaction();
+
+		TopicProblemMapping topicProblemMapping = new TopicProblemMapping();
+		Problem problem = null;
+		try {
+			transaction.begin();
+			Topic topic = (Topic) commonDAO.getEntity(id, null, Topic.class, session);
+			problem = (Problem) commonDAO.getEntity(problemId, null, Problem.class, session);
+			commonDAO.setEntityDefaultProperties(topicProblemMapping);
+			topic.addTopicProblemMapping(topicProblemMapping);
+			problem.addTopicProblemMapping(topicProblemMapping);
+			topicProblemMapping.setProblem(problem);
+			topicProblemMapping.setTopic(topic);
+			topicProblemMapping.setSequenceNo(sequenceNo);
 			transaction.commit();
 		} finally {
 			session.close();

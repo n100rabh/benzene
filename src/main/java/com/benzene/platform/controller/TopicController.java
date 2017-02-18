@@ -105,6 +105,16 @@ public class TopicController {
 		return response;
 	}
 	
+	@ApiOperation(value = "Add an existing Problem to Topic", notes = "Returns added problem")
+	@RequestMapping(value = "topic/{id}/problem/{problemId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public BaseResponse addProblem(@PathVariable("id") Long id,@PathVariable("problemId") Long problemId, @RequestBody Integer sequenceNo) throws Throwable {
+		logger.info("createProblem Request:" + sequenceNo.toString());
+		BaseResponse response = topicManager.addExistingProblem(id, problemId, sequenceNo);
+		logger.info("createProblem Response:" + response.toString());
+		return response;
+	}
+	
 	@ApiOperation(value = "Get Problems By Topic", notes = "Returns list of problems")
 	@RequestMapping(value = "topic/{id}/problems", method = RequestMethod.GET)
 	@ResponseBody
